@@ -31,15 +31,13 @@ class OpenAIClient
     public function __construct(
         protected readonly Config $config,
         protected readonly StoreManagerInterface $storeManager
-    ) {
-        $this->initializeOpenAiClient();
-    }
+    ) { }
 
     /**
      * @return void
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws \Exception
      */
-    public function initializeOpenAiClient(): void
+    public function getOpenAIClient(): Client
     {
         try {
             $apiKey = $this->config->getApiKey($this->storeManager->getStore()->getId());
@@ -47,6 +45,8 @@ class OpenAIClient
         } catch (\Exception $e) {
             throw new Exception('Invalid api key. Please change it in Configurations. ' . $e->getMessage());
         }
+
+        return $this->openAIClient;
     }
 
     /**
@@ -55,7 +55,7 @@ class OpenAIClient
      */
     public function getCompletions(string $question): Completions
     {
-        $response = $this->openAIClient->completions()->create([
+        $response = $this->getOpenAIClient()->completions()->create([
             'model' => $this->model,
             'prompt' => $question,
         ]);
