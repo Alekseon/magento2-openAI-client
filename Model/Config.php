@@ -32,6 +32,10 @@ class Config
             self::ALEKSEON_OPENAIAPICLIENT_API_KEY, ScopeInterface::SCOPE_STORE,$storeId
         );
 
+        if (empty($apiKey)) {
+            throw new \RuntimeException('Override config apikey for ChatGpg isn\'t initialized');
+        }
+
         return $this->encryptor->decrypt($apiKey);
     }
 }
