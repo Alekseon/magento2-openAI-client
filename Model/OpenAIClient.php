@@ -17,7 +17,7 @@ class OpenAIClient
     /**
      * @var Client
      */
-    protected readonly Client $openAIClient;
+    protected Client $openAIClient;
     /**
      * @var string
      */
