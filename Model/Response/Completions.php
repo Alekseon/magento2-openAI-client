@@ -56,6 +56,7 @@ class Completions
      */
     public function getChoiceText(): string|false
     {
-        return ($this->choices[0] && $this->choices[0]['text'])? $this->choices[0]['text'] : false;
+        $choicetext = ($this->choices[0] && $this->choices[0]['text'])? $this->choices[0]['text'] : '';
+        return trim( $choicetext);
     }
 }

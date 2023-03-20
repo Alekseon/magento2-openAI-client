@@ -55,9 +55,14 @@ class OpenAIClient
      */
     public function getCompletions(string $question): Completions
     {
+        $question = strip_tags($question);
+        $question = trim(preg_replace('/\s\s+/', ' ', $question));
+
         $response = $this->getOpenAIClient()->completions()->create([
             'model' => $this->model,
             'prompt' => $question,
+            'max_tokens' => 120,
+            //'temperature' => 0
         ]);
 
         return Completions::from($response);
